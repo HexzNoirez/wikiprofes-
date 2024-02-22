@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfesoresController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/landing', function () {
+    return view('profesores.landing');
+});
+
+Route::resource('wikiprofes', ProfesoresController::class);
