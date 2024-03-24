@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProfesoresController;
+use App\Http\Controllers\WikiprofeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,4 +22,5 @@ Route::get('/landing', function () {
     return view('profesores.landing');
 });
 
-Route::resource('wikiprofes', ProfesoresController::class);
+
+Route::resource('wikiprofes',WikiprofeController::class);
