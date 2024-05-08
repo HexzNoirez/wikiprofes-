@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<x-milayout_wikiprofe>
 <body>
+    @section('content')
     <h1>WikiProfes</h1>
 
     @if ($errors->any())
@@ -37,6 +32,6 @@
 
         <input type="submit" value="Submit">
     </form>
-    
+    @endsection
 </body>
-</html>
+</x-milayout_wikiprofe>
