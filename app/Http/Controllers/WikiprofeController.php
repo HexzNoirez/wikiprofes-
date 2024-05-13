@@ -10,10 +10,16 @@ class WikiprofeController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show');
+    }
+
     public function index()
     {
-        $profesores = Wikiprofe::all();
-        return view('profesores.indexProfesores', compact('profesores'));
+        $wikiprofes = Wikiprofe::all();
+        $wikiprofes = Wikiprofe::with('user')->get();
+        return view('wikiprofes.indexProfesores', compact('wikiprofes'));
     }
 
     /**
@@ -21,7 +27,8 @@ class WikiprofeController extends Controller
      */
     public function create()
     {
-        return view('profesores.createProfes');
+        
+        return view('wikiprofes.createProfes');
     }
 
     /**
@@ -37,13 +44,16 @@ class WikiprofeController extends Controller
             'comentario' => ['required', 'string', 'min:10','max:255'],
         ]);
 
-        $wikiprofe = new Wikiprofe();
+        Wikiprofe::create(['user_id' => auth()->id()] + $request->all());
+
+        /*$wikiprofe = new Wikiprofe();
         $wikiprofe->profesor = $request->profesor;
         $wikiprofe->nrc = $request->nrc;
         $wikiprofe->materia = $request->materia;
         $wikiprofe->rating = $request->rating;
         $wikiprofe->comentario = $request->comentario;
-        $wikiprofe->save();
+        $wikiprofe->user_id = auth()->id(); 
+        $wikiprofe->save();*/
 
         return redirect()->route('wikiprofes.index');
     }
@@ -53,15 +63,16 @@ class WikiprofeController extends Controller
      */
     public function show(Wikiprofe $wikiprofe)
     {
-        return view('profesores.showProfe', compact('wikiprofe'));
+        return view('wikiprofes.showProfe', compact('wikiprofe'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Wikiprofe $wikiprofe)
-    {
-        return view('profesores.editProfesores', compact('wikiprofe'));
+    {   
+        $this->authorize('update', $wikiprofe);
+        return view('wikiprofes.editProfesores', compact('wikiprofe'));
     }
 
     /**
@@ -69,6 +80,8 @@ class WikiprofeController extends Controller
      */
     public function update(Request $request, Wikiprofe $wikiprofe)
     {
+
+        $this->authorize('update', $wikiprofe); 
 
         $request->validate([
             'profesor' => ['required', 'string', 'max:100'],
@@ -78,12 +91,15 @@ class WikiprofeController extends Controller
             'comentario' => ['required', 'string', 'min:10','max:255'],
         ]);
 
-        $wikiprofe->profesor = $request->profesor;
+        $wikiprofe->update($request->all());
+
+       /* $wikiprofe->profesor = $request->profesor;
         $wikiprofe->nrc = $request->nrc;
         $wikiprofe->materia = $request->materia;
         $wikiprofe->rating = $request->rating;
         $wikiprofe->comentario = $request->comentario;
-        $wikiprofe->save();
+        $wikiprofe->user_id = auth()->id(); 
+        $wikiprofe->save();*/
 
         return redirect()->route('wikiprofes.show', $wikiprofe);
     }
@@ -93,6 +109,9 @@ class WikiprofeController extends Controller
      */
     public function destroy(Wikiprofe $wikiprofe)
     {
+        dd($wikiprofe);
+        $this->authorize('delete', $wikiprofe);
+        
         $wikiprofe->delete();
         return redirect()->route('wikiprofes.index');
     }

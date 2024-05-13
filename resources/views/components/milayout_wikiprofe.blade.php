@@ -16,54 +16,76 @@
   <link href="{{ asset('assets/css/material-kit.css?v=3.0.0')}}" rel="stylesheet" />
 </head>
 
-<body>
+<body style="background-color:#0A0A08">
     {{$slot}}
-  <!-- Navbar Transparent -->
-  <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent">
-    <div class="container">
-      <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon mt-2">
-          <span class="navbar-toggler-bar bar1"></span>
-          <span class="navbar-toggler-bar bar2"></span>
-          <span class="navbar-toggler-bar bar3"></span>
-        </span>
-      </button>
-      <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0 ms-lg-12 ps-lg-5" id="navigation">
-        <ul class="navbar-nav navbar-nav-hover ms-auto">
-          <li class="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
-            <a class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuPages2" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="material-icons opacity-6 me-2 text-md">dashboard</i>
-              Pages
-              <img src="{{asset('./assets/img/down-arrow-white.svg')}}" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-block d-none">
-              <img src="{{asset('./assets/img/down-arrow-dark.svg')}}" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-none d-block">
-            </a>
-          </li>
 
-          <li class="nav-item dropdown dropdown-hover mx-2">
-            <a class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuBlocks" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="material-icons opacity-6 me-2 text-md">view_day</i>
-              Sections
-              <img src="{{asset('./assets/img/down-arrow-white.svg')}}" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-block d-none">
-              <img src="{{asset('./assets/img/down-arrow-dark.svg')}}" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-none d-block">
-            </a>
-          </li>
-
-          <li class="nav-item dropdown dropdown-hover mx-2">
-            <a class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuDocs" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="material-icons opacity-6 me-2 text-md">article</i>
-              Docs
-              <img src="{{asset('./assets/img/down-arrow-white.svg')}}" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-block d-none">
-              <img src="{{asset('./assets/img/down-arrow-dark.svg')}}" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-none d-block">
-            </a>
-          </li>
-        </ul>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                  <div class="container my-auto">
+                    <div class="row"> {{--inicio login--}}
+                      <div class="col-lg-8 col-md-8 col-12 mx-auto">
+                        <div class="card z-index-0 fadeIn3 fadeInBottom">
+                          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                              <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign in</h4>
+                              <div class="row mt-3">
+                                <div class="col-2 text-center ms-auto">
+                                  <a class="btn btn-link px-3" href="javascript:;">
+                                    <i class="fa fa-facebook text-white text-lg"></i>
+                                  </a>
+                                </div>
+                                <div class="col-2 text-center px-1">
+                                  <a class="btn btn-link px-3" href="javascript:;">
+                                    <i class="fa fa-github text-white text-lg"></i>
+                                  </a>
+                                </div>
+                                <div class="col-2 text-center me-auto">
+                                  <a class="btn btn-link px-3" href="javascript:;">
+                                    <i class="fa fa-google text-white text-lg"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <form role="form" method="POST" action="/login" class="text-start">
+                              @csrf
+                              <div class="input-group input-group-outline my-3">
+                                <label class="form-label" for="email" value="{{ __('Email') }}" ></label>
+                                <input placeholder="Example@email.com" id="email" type="email" class="form-control" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                              </div>
+                              <div class="input-group input-group-outline mb-3">
+                                <label class="form-label" for="password" value="{{ __('Password') }}" ></label>
+                                <input placeholder="Password" id="password" type="password" class="form-control" name="password" required autocomplete="current-password" />
+                              </div>
+                              <div class="form-check form-switch d-flex align-items-center mb-3">
+                                <input class="form-check-input" type="checkbox" id="remember_me" name="remember" checked>
+                                <label class="form-check-label mb-0 ms-3" for="remember_me">{{ __('Remember me') }}</label>
+                              </div>
+                              <div class="text-center">
+                                <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">{{ __('Log in') }}</button>
+                              </div>
+                              <p class="mt-4 text-sm text-center">
+                                <a href="{{route('register')}}">Don't have an account?</a>
+                              </p>
+                            </form>
+                          </div>
+                        </div>
+                      </div>{{--final login--}}
+                    </div>
+                  </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn bg-gradient-dark" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
     </div>
-  </nav>
-  <!-- End Navbar -->
 
-
-  <div class="page-header min-vh-80" style="background-image: url('https://images.unsplash.com/photo-1630752708689-02c8636b9141?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2490&q=80')">
+{{--Fondo del sitio web--}}
+  <div class="page-header min-vh-80" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/1e/Laboratorios_de_c%C3%B3mputo_Alfa_y_Beta_%28noche%29%2C_CUCEI.jpg')"> {{--imagen cagada jaja https://i.imgflip.com/1w5ns0.jpg--}}
     <span class="mask bg-gradient-dark opacity-6"></span>
     <div class="container">
       <div class="row">
@@ -76,16 +98,21 @@
       </div>
     </div>
   </div>
-  <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
+  <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6" style="background-color: #303032">
     <div class="container">
       <div class="section text-center">
         {{--<h2 class="title">Your main section here</h2>--}}
             <div style="display: grid; justify-content: center;">
+              
             @yield('content')
+            
             </div>
       </div>
     </div>
   </div>
+
+  {{--</x-navbar>--}}
+
   <footer class="footer pt-5 mt-5">
     <div class="container">
       <div class=" row">
@@ -236,6 +263,13 @@
       </div>
     </div>
   </footer>
+  
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Your custom scripts here -->
+
 </body>
 
 </html>

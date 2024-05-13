@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+Use App\Models\User;
+Use App\Models\Wikiprofe;
+use App\Policies\WikiprofePolicy;
+Use Illuminate\Auth\Access\Response;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Wikiprofe::class => WikiprofePolicy::class,
     ];
 
     /**
@@ -22,5 +26,16 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        Gate::define('update-post', function (User $user, Wikiprofe $wikiprofe) {
+            return $user->id === $wikiprofe->user_id
+            ? Response::allow()
+            : Response::deny('No puedes editar este post, no es tuyo');
+        });
+
+        Gate::define('delete-post', function (User $user, Wikiprofe $wikiprofe) {
+            return $user->id === $wikiprofe->user_id
+            ? Response::allow()
+            : Response::deny('No puedes eliminar este post, no es tuyo');
+        });
     }
 }

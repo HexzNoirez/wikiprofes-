@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\WikiprofeController;
+use App\Http\Controllers\ProfesorController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +25,22 @@ Route::get('/landing', function () {
     return view('profesores.landing');
 });
 
+Route::get('/contact', function () {
+    return view('components.contact');
+})->name('contact');
+
+Route::get('/contact', function () {
+    return view('components.contact');
+})->name('contact.page');
+
+Route::get('/contact/show', [ContactController::class, 'show'] )->name('contact.show');
+Route::post('/contact/submit', [ContactController::class, 'submit'] )->name('contact.submit');
 
 Route::resource('wikiprofes',WikiprofeController::class);
+
+Route::resource('profesores',ProfesorController::class);
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -33,3 +50,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::post('/login', [AuthController::class, 'login']);

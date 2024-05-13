@@ -1,7 +1,5 @@
 <x-milayout_wikiprofe>
-
-<body>
-    <div class="center">
+    <body>
         @section('content')
             <h1 class="text-3x1 font-bold">Listado de profesores</h1>
             <table class="table" border="1">
@@ -16,17 +14,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($profesores as $profesor)
+                    @foreach ($wikiprofes as $wikiprofe)
                         <tr>
-                            <td>{{ $profesor->profesor }}</td>
-                            <td>{{ $profesor->nrc }}</td>
-                            <td>{{ $profesor->materia }}</td>
-                            <td>{{ $profesor->rating }}</td>
-                            <td>{{ $profesor->comentario }}</td>
+                            <td>{{ $wikiprofe->profesor }}</td>
+                            <td>{{ $wikiprofe->nrc }}</td>
+                            <td>{{ $wikiprofe->materia }}</td>
+                            <td>{{ $wikiprofe->rating }}</td>
+                            <td>{{ $wikiprofe->comentario }}</td>
+                            {{--<td>{{ $profesor->user->name }}</td>--}}
                             <td>
-                                <a href="{{ route('wikiprofes.show', $profesor) }}">Ver</a>
-                                <a href="{{ route('wikiprofes.edit', $profesor) }}">Editar</a>
-                                <form action="{{ route('wikiprofes.destroy', $profesor) }}" method="POST">
+                                <a href="{{ route('wikiprofes.show', $wikiprofe) }}">Ver</a>
+                                <a href="{{ route('wikiprofes.edit', $wikiprofe) }}">Editar</a>
+                                <form action="{{ route('wikiprofes.destroy', $wikiprofe) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <input type="submit" value="Eliminar">
@@ -36,8 +35,6 @@
                     @endforeach
                 </tbody>
             </table>
-            
         @endsection
-    </div>
-</body>
+    </body>
 </x-milayout_wikiprofe>

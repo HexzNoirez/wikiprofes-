@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wikiprofes', function (Blueprint $table) {
+        Schema::create('profesors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-            $table->string('profesor')->index();
-            $table->string('nrc');
-            $table->string('materia');
-            $table->integer('rating');
-            $table->string('comentario');
+            $table->string('profesor_nombre')->index();
+            $table->integer('calificacion');
+            $table->string('image')->nullable;
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wikiprofes');
+        Schema::dropIfExists('profesors');
     }
 };
